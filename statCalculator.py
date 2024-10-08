@@ -1,7 +1,7 @@
 import numpy as np
 from utils import *
 
-class StatisticalCalculator:
+class statisticalCalculator:
     def __init__(self, data):
         self.data = np.array(data)  # Store data as a numpy array
 

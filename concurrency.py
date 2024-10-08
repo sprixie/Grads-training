@@ -1,9 +1,9 @@
 import numpy as np
-from statCalculator import StatisticalCalculator
+from statCalculator import statisticalCalculator
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 def main(data):
-    calculator = StatisticalCalculator(data)
+    calculator = statisticalCalculator(data)
     with ThreadPoolExecutor() as executor:
         futures = {
             executor.submit(calculator.mean): 'mean',
