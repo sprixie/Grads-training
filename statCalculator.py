@@ -3,37 +3,32 @@ from utils import *
 
 class StatisticalCalculator:
     def __init__(self, data):
-        self.mean = self.mean(data)
-        self.sampleVariance = self.sampleVariance(data)
-        self.standardDeviation = self.standardDeviation(data)
-        self.median = self.median(data)
+        self.data = np.array(data)  # Store data as a numpy array
 
-    def mean(self, data):
-        if len(data) == 0:
+    def mean(self):
+        if len(self.data) == 0:
             return None
         else:
-            return sum(data) / len(data)
-        
-    def sampleVariance(self, data):
-        if len(data) == 0:
-            return None
-        else:
-            return sum((data-self.mean)**2) / (len(data)-1) 
+            return sum(self.data) / len(self.data)
 
-    def standardDeviation(self, data):
-        if len(data) == 0:
+    def sampleVariance(self):
+        if len(self.data) < 2: # Not enough data for sample variance
+            return None  
+        mean_val = self.mean()
+        return np.sum((self.data - mean_val) ** 2) / (len(self.data) - 1)
+
+    def standardDeviation(self):
+        var = self.sampleVariance()
+        return np.sqrt(var) if var is not None else None
+
+    def median(self):
+        if len(self.data) == 0:
             return None
         else:
-            return np.sqrt(self.sampleVariance)
-        
-    def median(self, data):
-        if len(data) == 0:
-            return None
-        else:
-            sortedData = np.array(quicksort(list(data)))
-            index = int(len(sortedData) // 2)
-            if len(sortedData) % 2 == 0:
-                return (sortedData[index-1] + sortedData[index])/2
+            sorted_data = np.sort(self.data)  # Use numpy's sort
+            index = len(sorted_data) // 2
+            if len(sorted_data) % 2 == 0:
+                return (sorted_data[index-1] + sorted_data[index]) / 2
             else:
-                return sortedData[index]
-        
+                return sorted_data[index]
+
